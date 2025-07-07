@@ -14,8 +14,6 @@ export class Game extends Phaser.Scene {
     }
 
     init(){
-        this.iframe = document.querySelector('iframe');
-        console.log(this.iframe);
     }
 
     getRandomNumber(min, max){
