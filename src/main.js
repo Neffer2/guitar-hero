@@ -14,7 +14,7 @@ const config = {
         mode: Phaser.Scale.FIT,
         fullscreenTarget: 'game-container',
     },
-    scene: [Boot, Preloader, Tutorial, Game, GameOver],
+    scene: [Boot, Preloader, Menu, Tutorial, Game, GameOver],
     physics: {
         default: 'arcade',
         arcade: {

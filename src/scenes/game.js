@@ -1,11 +1,12 @@
 export class Game extends Phaser.Scene {
+    iframe;
     constructor ()
     {
         super('Game');
     }
 
     create(){
-        
+        console.log("Hola muindo");
     }
 
     update(){
@@ -13,7 +14,8 @@ export class Game extends Phaser.Scene {
     }
 
     init(){
-        
+        this.iframe = document.querySelector('iframe');
+        console.log(this.iframe);
     }
 
     getRandomNumber(min, max){

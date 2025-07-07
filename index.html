@@ -10,9 +10,21 @@
     <!-- <div style="font-family: 'primary-font', sans-serif; position: absolute; left:-1000px; visibility:hidden;">.</div> -->
     <div id="game-container">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/zSMnGEuxB0U?si=OmFQUxBt72iyiYmv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/zSMnGEuxB0U?si=OmFQUxBt72iyiYmv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+        <button class="btn" onClick="controlVideo('pauseVideo');">Pause</button>
+        <button class="btn" onClick="controlVideo('stopVideo');">Stop</button>
+        <button class="btn" onClick="controlVideo('playVideo');">Play</button>
     </div>
 
+    <script>
+        function controlVideo(vidFunc) {
+            var iframe = document.getElementsByTagName("iframe")[0].contentWindow;
+            iframe.postMessage(
+                '{"event":"command","func":"' + vidFunc + '","args":""}',
+                "*"
+            );
+        }
+    </script>
     <script type="module" src="./src/phaser.min.js"></script>
     <script type="module" src="./src/main.js"></script>
 </body>
