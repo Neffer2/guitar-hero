@@ -7,7 +7,9 @@ export class Preloader extends Phaser.Scene {
     preload ()
     {
         this.load.setPath('public/assets');
-        
+        this.load.image('left', '/buttons/left.png');
+        this.load.image('right', '/buttons/right.png');
+        this.load.image('up', '/buttons/up.png');
     }
 
     create ()

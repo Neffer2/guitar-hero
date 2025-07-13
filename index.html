@@ -9,51 +9,11 @@
 <body>
     <!-- <div style="font-family: 'primary-font', sans-serif; position: absolute; left:-1000px; visibility:hidden;">.</div> -->
     <div id="player"></div>
-     
+    <button id="start">Iniciar</button>
     <div id="game-container"></div>
 
-    <script>
-        let tag = document.createElement('script');
-
-        tag.src = "https://www.youtube.com/iframe_api";
-        let firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        let player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '250',
-                width: '250',
-                videoId: 'zSMnGEuxB0U',
-                playerlets: {
-                    'playsinline': 1
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            setTimeout(function() {
-                event.target.playVideo();
-            }, 2000);
-        }
-
-        let done = false;
-        function onPlayerStateChange(event) {
-                if (event.data == YT.PlayerState.PLAYING && !done) {
-                    console.log(event.data);
-                done = true;
-            }
-        }
-
-        function stopVideo() {
-            player.stopVideo();
-        }
-    </script>
     <script type="module" src="./src/phaser.min.js"></script>
     <script type="module" src="./src/main.js"></script>
+    <script src="./src/js/iframe.js"></script>
 </body>
 </html> 

@@ -18,14 +18,15 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 600 },
+            // gravity: { y: 600 },
             // debug: true
         }
     },
     input :{
 		activePointers: 3,
     },
-    backgroundColor: '#fff'
+    backgroundColor: '#0000'
 };
   
 export const game = new Phaser.Game(config);
+window.game = game;
