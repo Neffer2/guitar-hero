@@ -7,10 +7,10 @@ import { GameOver } from './scenes/gameOver.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 1920,
-    height: 1080,
+    width: 720,
+    height: 1280,
     parent: 'game-container',
-    scale: { 
+    scale: {  
         mode: Phaser.Scale.FIT,
         fullscreenTarget: 'game-container',
     },
@@ -19,14 +19,14 @@ const config = {
         default: 'arcade',
         arcade: {
             // gravity: { y: 600 },
-            // debug: true
+            debug: true
         }
     },
     input :{
 		activePointers: 3,
     },
-    backgroundColor: '#0000'
+    backgroundColor: '#fff'
 };
   
 export const game = new Phaser.Game(config);
-window.game = game;
+window.game = game; 
