@@ -16,10 +16,10 @@ export class Game extends Phaser.Scene {
         { note: 7, seg: 6.939, pos: 2 },
         { note: 8, seg: 7.211, pos: 1 },
         { note: 9, seg: 7.483, pos: 0 },
-        { note: 10, seg: 8.027, pos: 1 },
-        { note: 11, seg: 8.345, pos: 2 },
-        { note: 12, seg: 8.571, pos: 1 },
-        { note: 13, seg: 8.844, pos: 0 },
+        { note: 10, seg: 8.027, pos: 0 },
+        { note: 11, seg: 8.345, pos: 1 },
+        { note: 12, seg: 8.571, pos: 2 },
+        { note: 13, seg: 8.844, pos: 1 },
         { note: 14, seg: 9.116, pos: 0 }
     ];
     notes = [];
