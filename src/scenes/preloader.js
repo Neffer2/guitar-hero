@@ -7,8 +7,9 @@ export class Preloader extends Phaser.Scene {
     preload ()
     {
         this.load.setPath('public/assets');
-        this.load.image('notes', '/notes/notes.png');
+        this.load.spritesheet('notes', '/notes/notes.png', { frameWidth: 199, frameHeight: 103 });
         this.load.image('neck', '/neck/neck.png');
+        this.load.image('bg', '/bg.png');
 
     }
 

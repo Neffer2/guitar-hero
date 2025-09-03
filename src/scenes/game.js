@@ -32,6 +32,7 @@ export class Game extends Phaser.Scene {
     }
 
     create(){
+        this.add.image((this.width/2), (this.height/2), 'bg');
         this.add.image((this.width/2), (this.height/2), 'neck');
 
         let positions = [((this.width/2) - 226), (this.width/2), ((this.width/2) + 226)];
