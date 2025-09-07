@@ -22,6 +22,7 @@ export class Game extends Phaser.Scene {
         { note: 13, seg: 8.844, pos: 1 },
         { note: 14, seg: 9.116, pos: 0 }
     ];
+    initPositions = [];
     positions = [];
     notes = [];
     width;
@@ -40,24 +41,23 @@ export class Game extends Phaser.Scene {
         this.add.image((this.width/2), (this.height/2), 'bg');
         this.add.image((this.width/2), (this.height/2), 'neck');
 
-        this.leftFret = this.physics.add.sprite(((this.width/2) - 226), (this.height - 100), 'fret')
+        this.leftFret = this.physics.add.sprite(this.positions[0], (this.height - 100), 'fret')
                         .setImmovable(true)
                         .setCircle(45, 55)
                         .setInteractive();
 
-        this.middleFret = this.physics.add.sprite((this.width/2), (this.height - 100), 'fret')
+        this.middleFret = this.physics.add.sprite(this.positions[1], (this.height - 100), 'fret')
                         .setImmovable(true)
                         .setCircle(45, 55)
                         .setInteractive();
 
-        this.rightFret = this.physics.add.sprite(((this.width/2) + 226), (this.height - 100), 'fret')
+        this.rightFret = this.physics.add.sprite(this.positions[2], (this.height - 100), 'fret')
                         .setImmovable(true)
                         .setCircle(45, 55)
                         .setInteractive();
 
         this.flame = this.add.sprite(((this.width/2) - 226), ((this.height/2) + 400), 'hit');    
         this.flame.alpha = 0;
-
 
         // Touhchpoints
         this.leftFret.on('pointerdown', () => {
@@ -133,10 +133,20 @@ export class Game extends Phaser.Scene {
             */
             mContext.tab.forEach((elem) => {
                 let note = mContext.physics.add.sprite(
-                    (mContext.positions[elem.pos]),  // X
+                    (mContext.initPositions[elem.pos]),  // X
                     (-(((elem.seg + mContext.initAvg) * mContext.velocity) - mContext.tabLength)), // Y
                     'notes');
-                note.setVelocityY(mContext.velocity);
+                note.setScale(0.1);
+                note.setVelocityY(mContext.velocity);        
+                mContext.tweens.add({
+                    targets: note,
+                    x: mContext.positions[elem.pos],
+                    scale: 1,
+                    ease: 'Linear',
+                    duration: (elem.seg * 1000),
+                    repeat: 0,
+                    yoyo: false,
+                });
                 mContext.notes.push(note);
             });
         }
@@ -155,6 +165,7 @@ export class Game extends Phaser.Scene {
         this.height = this.sys.game.config.height;
         this.width = this.sys.game.config.width;
         this.positions = [((this.width/2) - 226), (this.width/2), ((this.width/2) + 226)];
+        this.initPositions = [((this.width/2) - 67), ((this.width/2) + 2), ((this.width/2) + 89)];
         
         // Animations
         this.anims.create({
@@ -182,5 +193,9 @@ export class Game extends Phaser.Scene {
         this.flame.on('animationcomplete', () => {
             this.flame.alpha = 0;
         });
+    }
+
+    noteTripAnim(note){
+
     }
 }
