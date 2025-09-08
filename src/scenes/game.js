@@ -126,30 +126,31 @@ export class Game extends Phaser.Scene {
         window.videoState = function(event) {
             console.log('Video started');
             console.log(event.data);
-
-            /**
-             * Indica la posicion en donde se debe crear la nota para que caiga en los segundos esperados
-             * -(((elem.seg + mContext.initAvg) * mContext.velocity) - mContext.tabLength)
-            */
-            mContext.tab.forEach((elem) => {
-                let note = mContext.physics.add.sprite(
-                    (mContext.initPositions[elem.pos]),  // X
-                    (-(((elem.seg + mContext.initAvg) * mContext.velocity) - mContext.tabLength)), // Y
-                    'notes');
-                note.setScale(0.1);
-                note.setVelocityY(mContext.velocity);        
-                mContext.tweens.add({
-                    targets: note,
-                    x: mContext.positions[elem.pos],
-                    scale: 1,
-                    ease: 'Linear',
-                    duration: (elem.seg * 1000),
-                    repeat: 0,
-                    yoyo: false,
-                });
-                mContext.notes.push(note);
-            });
         }
+
+        /**
+         * Indica la posicion en donde se debe crear la nota para que caiga en los segundos esperados
+         * -(((elem.seg + mContext.initAvg) * mContext.velocity) - mContext.tabLength)
+        */
+        mContext.tab.forEach((elem) => {
+            let note = mContext.physics.add.sprite(
+                (mContext.initPositions[elem.pos]),  // X
+                (-(((elem.seg + mContext.initAvg) * mContext.velocity) - mContext.tabLength)), // Y
+                'notes');
+            note.setScale(0.1);
+            note.setVelocityY(mContext.velocity);        
+            console.log(elem.seg * 1000);
+            mContext.tweens.add({
+                targets: note,
+                x: mContext.positions[elem.pos],
+                scale: 1,
+                ease: 'Linear',
+                duration: (elem.seg * 1000),
+                repeat: 0,
+                yoyo: false,
+            });
+            mContext.notes.push(note);
+        });
 
         window.gameStarted = function() {
             console.log('Game started');            
