@@ -3,11 +3,37 @@ export class Game extends Phaser.Scene {
     left; 
     left2;
     tab = [
-        { note: 1, seg: 8.065943, pos: 0 },
-        { note: 2, seg: 8.526077, pos: 0 },
+        { note: 1, seg: 8.101089, pos: 1 },
+        { note: 2, seg: 8.435374, pos: 0 },
+        { note: 3, seg: 8.752834, pos: 2 },
 
-        { note: 3, seg: 8.888889, pos: 2 },
-        { note: 4, seg: 9.251701, pos: 0 }
+        { note: 4, seg: 9.070295, pos: 0 },
+        { note: 5, seg: 9.387755, pos: 0 },
+        { note: 6, seg: 9.659864, pos: 2 },
+
+        { note: 7, seg: 10.521542, pos: 0 },
+        { note: 8, seg: 10.884354, pos: 0 },
+        { note: 9, seg: 11.292517, pos: 2 },
+
+        { note: 10, seg: 11.609977, pos: 0 },
+        { note: 11, seg: 11.882086, pos: 0 },
+        { note: 12, seg: 12.244898, pos: 2 },
+
+        { note: 13, seg: 13.061224, pos: 0 },
+        { note: 14, seg: 13.424036, pos: 0 },
+        { note: 15, seg: 13.832200, pos: 2 },
+
+        { note: 16, seg: 14.149660, pos: 0 },
+        { note: 17, seg: 14.467120, pos: 0 },
+        { note: 18, seg: 14.784580, pos: 2 },
+
+        { note: 19, seg: 15.600907, pos: 0 },
+        { note: 20, seg: 15.963719, pos: 0 },
+        { note: 21, seg: 16.326531, pos: 2 },
+
+        { note: 22, seg: 16.643991, pos: 0 },
+        { note: 23, seg: 17.006803, pos: 0 },
+        { note: 24, seg: 17.278912, pos: 2 },
     ];
     // Cuanto demora en iniciar la canción
     initAvg = this.tab[0].seg;
@@ -101,7 +127,7 @@ export class Game extends Phaser.Scene {
                         this.playFlame(1);
                     }
                 });
-            }
+            } 
 
             if (key.code === 'KeyD') {
                 console.log('D');
@@ -125,11 +151,13 @@ export class Game extends Phaser.Scene {
             mContext.tab.forEach((elem) => {
                 let note = mContext.physics.add.sprite(
                     (mContext.initPositions[elem.pos]),  // X
-                    ((-(mContext.velocity * elem.seg)) + (mContext.tabLength + note.height)), // Y
+                    (-1000), // Y
                     'notes');
+                note.y  = (-(mContext.velocity * elem.seg)) + (mContext.tabLength - note.body.height);
                 note.setVelocityY(mContext.velocity);        
+                note.position = elem.pos;
+                mContext.noteTripAnim(note);
                 mContext.notes.push(note);
-                console.log(note);
             });
         }
 
@@ -178,6 +206,9 @@ export class Game extends Phaser.Scene {
     }
 
     noteTripAnim(note){
-
+        if (note.position === 0) this.physics.moveToObject(note, this.leftFret, 200);
+        if (note.position === 1) this.physics.moveToObject(note, this.middleFret, 200);
+        if (note.position === 2) this.physics.moveToObject(note, this.rightFret, 200);
     }
 }
+ 
