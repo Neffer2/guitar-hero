@@ -2,41 +2,8 @@ let mContext;
 export class Game extends Phaser.Scene {
     left; 
     left2;
-    tab = [
-        { note: 1, seg: 8.101089, pos: 1 },
-        { note: 2, seg: 8.435374, pos: 0 },
-        { note: 3, seg: 8.752834, pos: 2 },
-
-        { note: 4, seg: 9.070295, pos: 0 },
-        { note: 5, seg: 9.387755, pos: 0 },
-        { note: 6, seg: 9.659864, pos: 2 },
-
-        { note: 7, seg: 10.521542, pos: 0 },
-        { note: 8, seg: 10.884354, pos: 0 },
-        { note: 9, seg: 11.292517, pos: 2 },
-
-        { note: 10, seg: 11.609977, pos: 0 },
-        { note: 11, seg: 11.882086, pos: 0 },
-        { note: 12, seg: 12.244898, pos: 2 },
-
-        { note: 13, seg: 13.061224, pos: 0 },
-        { note: 14, seg: 13.424036, pos: 0 },
-        { note: 15, seg: 13.832200, pos: 2 },
-
-        { note: 16, seg: 14.149660, pos: 0 },
-        { note: 17, seg: 14.467120, pos: 0 },
-        { note: 18, seg: 14.784580, pos: 2 },
-
-        { note: 19, seg: 15.600907, pos: 0 },
-        { note: 20, seg: 15.963719, pos: 0 },
-        { note: 21, seg: 16.326531, pos: 2 },
-
-        { note: 22, seg: 16.643991, pos: 0 },
-        { note: 23, seg: 17.006803, pos: 0 },
-        { note: 24, seg: 17.278912, pos: 2 },
-    ];
     // Cuanto demora en iniciar la canción
-    initAvg = this.tab[0].seg;
+    initAvg = 0;
     velocity = 200;
     tabLength = 1280;
     initPositions = [];
@@ -57,6 +24,12 @@ export class Game extends Phaser.Scene {
     create(){
         this.add.image((this.width/2), (this.height/2), 'bg');
         this.add.image((this.width/2), (this.height/2), 'neck');
+
+        this.tab = mContext.getTabs('GreenDay-WakeMeUpWhenSeptemberEnds.txt');
+        console.log('Tab loaded:', this.tab);
+
+
+        this.initAvg = this.tab.length > 0 ? this.tab[0].seg : 0;
 
         this.leftFret = this.physics.add.sprite(this.positions[0], (this.height - 100), 'fret')
                         .setSize(200, 120, true)
@@ -209,6 +182,47 @@ export class Game extends Phaser.Scene {
         if (note.position === 0) this.physics.moveToObject(note, this.leftFret, 200);
         if (note.position === 1) this.physics.moveToObject(note, this.middleFret, 200);
         if (note.position === 2) this.physics.moveToObject(note, this.rightFret, 200);
+    }
+
+    getTabs(songName){
+        const tabCacheKey = songName || 'GreenDay-WakeMeUpWhenSeptemberEnds.txt';
+        const txt = this.cache.text.get(tabCacheKey);
+
+        if (!txt) {
+            console.warn(`No se encontró el tab con la clave: ${tabCacheKey}`);
+            return [];
+        }
+
+        return txt
+            .split(/\r?\n/)
+            .map(line => line.trim())
+            .filter(line => line.length > 0)
+            .map((line, index) => {
+                const values = line.split(/\s+/).filter(Boolean);
+                const seg = Number.parseFloat(values[0]);
+
+                let pos;
+                for (let i = 1; i < values.length; i++) {
+                    if (/^\d+$/.test(values[i])) {
+                        const parsedPos = Number.parseInt(values[i], 10);
+                        if (parsedPos >= 0 && parsedPos <= 2) {
+                            pos = parsedPos;
+                            break;
+                        }
+                    }
+                }
+
+                if (typeof pos === 'undefined') {
+                    pos = this.getRandomNumber(0, 3);
+                }
+
+                return {
+                    note: index + 1,
+                    seg: Number.isFinite(seg) ? seg : 0,
+                    pos
+                };
+            })
+            .filter(note => note.seg > 0);
     }
 }
  

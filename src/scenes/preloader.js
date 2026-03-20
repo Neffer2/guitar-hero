@@ -12,6 +12,7 @@ export class Preloader extends Phaser.Scene {
         this.load.image('fret', '/notes/tecla_on.png');
         this.load.image('neck', '/neck/neck.png');
         this.load.image('bg', '/bg.png');
+        this.load.text('GreenDay-WakeMeUpWhenSeptemberEnds.txt', '/tabs/GreenDay-WakeMeUpWhenSeptemberEnds.txt');
     }
 
     create ()
